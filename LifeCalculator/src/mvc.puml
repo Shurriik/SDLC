@@ -1,0 +1,79 @@
+@startuml
+
+title Архитектура приложения «Калькулятор жизни»
+
+package model {
+
+    class LifeModel {
+        - birthDate : LocalDate
+        - propertyChangeSupport : PropertyChangeSupport
+
+        + LifeModel()
+        + getBirthDate() : LocalDate
+        + setBirthDate(date : LocalDate)
+        + getAge() : Period
+        + getDaysLived() : long
+        + getSleepHours() : double
+        + getSleepDays() : double
+        + getBlinks() : double
+        + getHeartBeats() : double
+        + getBloodLiters() : double
+        + getWaterLiters() : double
+        + getLaughs() : double
+        + addPropertyChangeListener(listener)
+        + removePropertyChangeListener(listener)
+    }
+
+    class LifeStatistics {
+        + SLEEP_HOURS_PER_DAY : double
+        + BLINKS_PER_MINUTE : double
+        + HEART_BEATS_PER_MINUTE : double
+        + BLOOD_LITERS_PER_MINUTE : double
+        + WATER_LITERS_PER_DAY : double
+        + LAUGHS_PER_DAY : double
+    }
+}
+
+package view {
+
+    class MainView {
+        - model : LifeModel
+
+        + MainView(model : LifeModel)
+        + propertyChange(event : PropertyChangeEvent)
+    }
+
+    class InputDialog {
+        - dateField : JTextField
+        - result : LocalDate
+
+        + InputDialog(parent, previousDate)
+        + getResult() : LocalDate
+    }
+}
+
+package controller {
+
+    class LifeController {
+        - model : LifeModel
+        - view : MainView
+
+        + LifeController(model : LifeModel, view : MainView)
+    }
+}
+
+class Main {
+    + main(args : String[])
+}
+
+LifeModel --> LifeStatistics : использует
+MainView --> LifeModel : получает данные
+MainView --> LifeController : передаёт действия
+LifeController --> LifeModel : изменяет данные
+LifeController --> InputDialog : открывает
+LifeModel --> MainView : уведомляет об изменениях
+Main --> LifeModel : создаёт
+Main --> MainView : создаёт
+Main --> LifeController : создаёт
+
+@enduml
