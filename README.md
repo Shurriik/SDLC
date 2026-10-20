@@ -14,4 +14,4 @@
 
 ## Иллюстрация системы
 
-![Модель системы TrustRate](Lab3/srs/mockups/trustrate_system)
+![Модель системы TrustRate](Lab3/srs/mockups/trustrate_system.png)
