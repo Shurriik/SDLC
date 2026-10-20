@@ -1,0 +1,98 @@
+{
+  "bdd|": {
+    "trustrate-model.sysml#TrustRateModel::User": {
+      "dx": 1281,
+      "dy": 973
+    },
+    "trustrate-model.sysml#TrustRateModel": {
+      "dx": 1266,
+      "dy": -1428,
+      "mw": 1698,
+      "mh": 1288
+    },
+    "trustrate-model.sysml#TrustRateModel::TrustRateContext": {
+      "dx": 136,
+      "dy": 698
+    },
+    "trustrate-model.sysml#TrustRateModel::TrustRateApplication": {
+      "dx": 445,
+      "dy": 78
+    },
+    "trustrate-model.sysml#TrustRateModel::VerificationService": {
+      "dx": 645,
+      "dy": 680
+    },
+    "trustrate-model.sysml#TrustRateModel::DealManagement": {
+      "dx": 197,
+      "dy": -31
+    },
+    "trustrate-model.sysml#TrustRateModel::AccountManagement": {
+      "dx": 1123,
+      "dy": 383
+    },
+    "trustrate-model.sysml#TrustRateModel::AuditLog": {
+      "dx": 54,
+      "dy": 565
+    },
+    "trustrate-model.sysml#TrustRateModel::TrustRateDatabase": {
+      "dx": -20,
+      "dy": 203
+    },
+    "trustrate-model.sysml#TrustRateModel::AntiFraudAndModeration": {
+      "dx": -96,
+      "dy": -100
+    },
+    "trustrate-model.sysml#TrustRateModel::TrustPointsWallet": {
+      "dx": 719,
+      "dy": 44
+    },
+    "trustrate-model.sysml#TrustRateModel::ReviewManagement": {
+      "dx": 549,
+      "dy": -20
+    },
+    "trustrate-model.sysml#TrustRateModel::TrustRateApplication::reviews~edge~compose~0": {
+      "dx": 0,
+      "dy": 0,
+      "wp": [
+        {
+          "x": -6,
+          "y": 2
+        }
+      ],
+      "rel": true
+    },
+    "trustrate-model.sysml#TrustRateModel::TrustRateApplication::wallet~edge~compose~0": {
+      "dx": 0,
+      "dy": 0,
+      "wp": [
+        {
+          "x": 22,
+          "y": -18
+        }
+      ],
+      "rel": true
+    },
+    "trustrate-model.sysml#TrustRateModel::TrustRateApplication::verification~edge~compose~0": {
+      "dx": 0,
+      "dy": 0,
+      "wp": [
+        {
+          "x": -17,
+          "y": -19
+        }
+      ],
+      "rel": true
+    },
+    "trustrate-model.sysml#TrustRateModel::TrustRateApplication::audit~edge~compose~0": {
+      "dx": 0,
+      "dy": 0,
+      "wp": [
+        {
+          "x": -21,
+          "y": 15
+        }
+      ],
+      "rel": true
+    }
+  }
+}
