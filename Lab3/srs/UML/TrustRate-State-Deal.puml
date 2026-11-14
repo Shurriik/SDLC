@@ -1,0 +1,34 @@
+
+@startuml
+title TrustRate — Диаграмма состояний сделки
+
+[*] --> Created : Создание сделки
+
+state "Created" as Created
+state "In progress" as InProgress
+state "Completed" as Completed
+state "Cancelled" as Cancelled
+state "Under review" as UnderReview
+
+Created --> InProgress : Начало выполнения
+Created --> Cancelled : Отмена до начала
+
+InProgress --> Completed : Получены необходимые подтверждения
+InProgress --> Cancelled : Согласованная отмена
+InProgress --> UnderReview : Жалоба или подозрительное событие
+
+UnderReview --> InProgress : Проверка завершена,\nсделка продолжается
+UnderReview --> Completed : Разрешено завершение сделки
+UnderReview --> Cancelled : Принято решение об отмене
+
+Completed --> [*]
+Cancelled --> [*]
+
+note right of UnderReview
+  Проверка не означает автоматического
+  признания нарушения.
+  Решение принимает уполномоченный
+  модератор.
+end note
+
+@enduml

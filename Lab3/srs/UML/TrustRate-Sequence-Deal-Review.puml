@@ -1,0 +1,70 @@
+@startuml
+title TrustRate — последовательность завершения сделки и отзывов
+autonumber
+actor "Участник A" as A
+actor "Участник B" as B
+participant "Web UI" as UI
+participant "DealController" as DC
+participant "DealService" as DS
+participant "DealRepository" as DR
+participant "TrustCurrencyService" as TC
+participant "ReviewController" as RC
+participant "ReviewService" as RS
+participant "ReviewRepository" as RR
+participant "AntiFraudService" as AF
+participant "RatingService" as Rating
+database PostgreSQL as DB
+A -> UI : Подтвердить завершение
+UI -> DC : complete(dealId)
+DC -> DS : completeDeal(dealId,userId)
+DS -> DR : findById(dealId)
+DR -> DB : SELECT deal
+DB --> DR : Deal
+DS -> DS : Проверить участника и статус
+alt Подтверждения достаточны
+ DS -> DR : save(status=Completed)
+ DR -> DB : UPDATE deal
+ DS -> TC : settleEscrow(dealId)
+ TC -> DB : Атомарно обновить баланс и ledger
+ DB --> TC : OK
+ DC --> UI : Успешное завершение
+ UI --> A : Статус Completed
+ UI --> B : Уведомление
+else Подтверждений недостаточно
+ DS --> DC : Pending / Error
+ DC --> UI : Показать результат
+end
+opt Сделка завершена
+ A -> UI : Отправить отзыв
+ UI -> RC : submitReview(...)
+ RC -> RS : createReview(...)
+ RS -> DR : Проверить сделку и участника
+ RS -> RR : Проверить дубликат
+ RR -> DB : SELECT review
+ RS -> RR : save(PendingPublication)
+ RR -> DB : INSERT review
+ B -> UI : Отправить отзыв
+ UI -> RC : submitReview(...)
+ RC -> RS : createReview(...)
+ RS -> RR : save(PendingPublication)
+ RR -> DB : INSERT review
+ RS -> RS : Проверить условие публикации
+alt Условие выполнено
+ RS -> RR : publishReviews(dealId)
+ RR -> DB : UPDATE reviews
+ RS -> AF : checkReviews(dealId)
+ AF --> RS : Результат
+ alt Подозрительная активность
+  RS -> RR : markForModeration()
+  RR -> DB : UPDATE status
+ else Проверка пройдена
+  RS -> Rating : recalculate(userId)
+  Rating -> DB : Получить учитываемые отзывы
+  DB --> Rating : Reviews
+  Rating -> DB : Сохранить рейтинг
+ end
+else Ожидание второго отзыва/срока
+ RS --> RC : Pending publication
+end
+end
+@enduml

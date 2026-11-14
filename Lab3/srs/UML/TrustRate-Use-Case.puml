@@ -1,0 +1,47 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+skinparam shadowing false
+actor "Гость" as Guest
+actor "Зарегистрированный\nпользователь" as User
+actor "Модератор" as Moderator
+actor "Администратор" as Admin
+actor "Почтовый сервис" as Mail
+actor "SMS" as SMS
+rectangle "TrustRate" {
+ usecase "Регистрация и подтверждение email\nUC-01" as U1
+ usecase "Просмотр/изменение профиля\nUC-02" as U2
+ usecase "Просмотр репутации\nUC-03" as U3
+ usecase "Создание и сопровождение сделки\nUC-04" as U4
+ usecase "Завершение сделки\nUC-05" as U5
+ usecase "Оставление/публикация отзыва\nUC-06" as U6
+ usecase "Просмотр баланса и истории TC\nUC-07" as U7
+ usecase "Верификация телефона/документа\nUC-08" as U8
+ usecase "Подача жалобы\nUC-09" as U9
+ usecase "Рассмотрение жалобы\nUC-10" as U10
+ usecase "Подача/рассмотрение апелляции\nUC-11" as U11
+ usecase "Управление ролями и параметрами\nUC-12" as U12
+ usecase "Формирование PDF-отчёта\nUC-13" as U13
+}
+Guest --> U1
+Guest --> U3
+User --> U2
+User --> U3
+User --> U4
+User --> U5
+User --> U6
+User --> U7
+User --> U8
+User --> U9
+User --> U11
+User --> U13
+Moderator --> U8
+Moderator --> U10
+Moderator --> U11
+Admin --> U12
+Mail --> U1
+SMS --> U8
+U5 ..> U4 : <<extend>>
+U6 ..> U5 : <<extend>>
+U10 ..> U9 : <<extend>>
+@enduml
